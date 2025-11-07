@@ -34,6 +34,7 @@ int main() {
         printf("1. Adicionar item\n");
         printf("2. Remover item\n");
         printf("3. Listar itens\n");
+        printf("4. Buscar item por nome\n");
         printf("0. Sair\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
@@ -82,12 +83,12 @@ int main() {
                 }
 
                 if (!encontrado) {
-                    printf("Item não encontrado.\n");
+                    printf("\n === Item não encontrado. ===\n");
                 }
                 break;
             }
 
-            case 3:
+            case 3: {
                 if (totalItens == 0) {
                     printf("A mochila está vazia.\n");
                 } else {
@@ -95,11 +96,35 @@ int main() {
                     printf("\n%-30s %-20s %-10s\n", "Nome", "Tipo", "Quantidade");
                     printf("-------------------------------------------------------------\n");
                     for (int i = 0; i < totalItens; i++) {
-                        printf("%-30s %-20s %-10s\n", mochila[i].nome, mochila[i].tipo, mochila[i].quantidade);
+                        printf("%-30s %-20s %-10d\n", mochila[i].nome, mochila[i].tipo, mochila[i].quantidade);
                     }
                 }
                 break;
+            }
+            case 4: {
+                char nomeBusca[TAM_NOME];
+                int encontrado = 0;
 
+                printf("Digite o nome do item para buscar: ");
+                fgets(nomeBusca, TAM_NOME, stdin);
+                nomeBusca[strcspn(nomeBusca, "\n")] = '\0';
+
+                for (int i = 0; i < totalItens; i++) {
+                    if (strcmp(mochila[i].nome, nomeBusca) == 0) {
+                        printf("\nItem encontrado:\n");
+                        printf("Nome      : %s\n", mochila[i].nome);
+                        printf("Tipo      : %s\n", mochila[i].tipo);
+                        printf("Quantidade: %d\n", mochila[i].quantidade);
+                        encontrado = 1;
+                        break;
+                    }
+                }
+
+                if (!encontrado) {
+                    printf("\n === Item não encontrado na mochila. ===\n");
+                }
+                break;
+            }
             case 0:
                 printf("Saindo do programa...\n");
                 break;
